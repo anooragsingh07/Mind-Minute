@@ -6,6 +6,49 @@
     <title>Breathing Exercise - MindMinute</title>
     <link rel="stylesheet" href="styles.css">
     <style>
+        body {
+            position: relative;
+            overflow: hidden;
+        }
+        .bubbles {
+            position: fixed;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            z-index: 0;
+            pointer-events: none;
+        }
+        .bubble {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(107, 142, 173, 0.15);
+            animation: floatBubble 12s linear infinite;
+        }
+        @keyframes floatBubble {
+            0% { transform: translateY(100vh) scale(0.8); opacity: 0.7; }
+            100% { transform: translateY(-10vh) scale(1.2); opacity: 0.2; }
+        }
+        .app-header {
+            text-align: center;
+            font-size: 1.2rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            font-weight: bold;
+            letter-spacing: 2px;
+        }
+        .footer {
+            text-align: center;
+            margin-top: 2rem;
+            color: var(--primary-color);
+            font-size: 1rem;
+            opacity: 0.7;
+        }
+        .settings {
+            position: fixed;
+            top: 1rem;
+            right: 1rem;
+            display: flex;
+            gap: 1rem;
+            z-index: 10;
+        }
         .breathing-container {
             display: flex;
             flex-direction: column;
@@ -61,6 +104,12 @@
     </style>
 </head>
 <body>
+    <div class="bubbles"></div>
+    <div class="app-header">MindMinute</div>
+    <div class="settings">
+        <button id="themeToggle" aria-label="Toggle dark mode">🌙</button>
+        <button id="soundToggle" aria-label="Toggle sound">🔊</button>
+    </div>
     <main class="container">
         <h1>Breathing Exercise</h1>
         
@@ -75,7 +124,27 @@
             </div>
         </div>
     </main>
+    <div class="footer">“A minute of calm can change your whole day.”</div>
 
+    <script>
+        // Bubbles animation
+        function createBubbles() {
+            const bubbles = document.querySelector('.bubbles');
+            for (let i = 0; i < 18; i++) {
+                const bubble = document.createElement('div');
+                bubble.className = 'bubble';
+                const size = Math.random() * 60 + 30;
+                bubble.style.width = `${size}px`;
+                bubble.style.height = `${size}px`;
+                bubble.style.left = `${Math.random() * 100}%`;
+                bubble.style.animationDuration = `${8 + Math.random() * 8}s`;
+                bubble.style.bottom = `-${size}px`;
+                bubbles.appendChild(bubble);
+            }
+        }
+        createBubbles();
+    </script>
+    <script src="script.js"></script>
     <script>
         let timeLeft = 60;
         let timerInterval;

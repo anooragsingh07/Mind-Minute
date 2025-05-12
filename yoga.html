@@ -6,49 +6,79 @@
     <title>Quick Yoga - MindMinute</title>
     <link rel="stylesheet" href="styles.css">
     <style>
-        .yoga-container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 70vh;
+        body {
+            position: relative;
+            overflow: hidden;
         }
-
-        .pose-container {
+        .lotus-bg {
+            position: fixed;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            z-index: 0;
+            pointer-events: none;
+        }
+        .lotus {
+            position: absolute;
+            width: 60px;
+            height: 60px;
+            opacity: 0.12;
+            animation: floatLotus 18s linear infinite;
+        }
+        @keyframes floatLotus {
+            0% { transform: translateY(100vh) scale(0.8) rotate(0deg); opacity: 0.2; }
+            100% { transform: translateY(-10vh) scale(1.2) rotate(360deg); opacity: 0.1; }
+        }
+        .app-header {
             text-align: center;
-            margin-bottom: 2rem;
+            font-size: 1.2rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            font-weight: bold;
+            letter-spacing: 2px;
         }
-
+        .footer {
+            text-align: center;
+            margin-top: 2rem;
+            color: var(--primary-color);
+            font-size: 1rem;
+            opacity: 0.7;
+        }
+        .settings {
+            position: fixed;
+            top: 1rem;
+            right: 1rem;
+            display: flex;
+            gap: 1rem;
+            z-index: 10;
+        }
         .pose-image {
-            width: 300px;
-            height: 300px;
-            object-fit: cover;
+            width: 250px;
+            height: 250px;
+            object-fit: contain;
+            background: #fff;
             border-radius: 15px;
             margin-bottom: 1rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            display: block;
+            padding: 10px;
         }
-
         .pose-title {
             font-size: 1.5rem;
             margin-bottom: 0.5rem;
             color: var(--primary-color);
         }
-
         .pose-description {
             max-width: 400px;
             margin: 0 auto;
             line-height: 1.6;
         }
-
         .timer {
             font-size: 2rem;
             margin-bottom: 2rem;
         }
-
         .controls {
             display: flex;
             gap: 1rem;
         }
-
         .controls button {
             padding: 0.5rem 1rem;
             border: none;
@@ -58,16 +88,20 @@
             cursor: pointer;
             transition: transform 0.2s;
         }
-
         .controls button:hover {
             transform: scale(1.05);
         }
     </style>
 </head>
 <body>
+    <div class="lotus-bg"></div>
+    <div class="app-header">MindMinute</div>
+    <div class="settings">
+        <button id="themeToggle" aria-label="Toggle dark mode">🌙</button>
+        <button id="soundToggle" aria-label="Toggle sound">🔊</button>
+    </div>
     <main class="container">
         <h1>Quick Yoga Poses</h1>
-        
         <div class="yoga-container">
             <div class="pose-container">
                 <img src="assets/tadasana.jpg" alt="Tadasana" class="pose-image" id="poseImage">
@@ -76,16 +110,32 @@
                     Stand tall with feet together, arms at sides. Feel grounded and centered.
                 </p>
             </div>
-            
             <div class="timer">20</div>
-            
             <div class="controls">
                 <button onclick="location.href='index.html'">Home</button>
                 <button id="nextPoseBtn">Next Pose</button>
             </div>
         </div>
     </main>
-
+    <div class="footer">“Yoga is the journey of the self, through the self, to the self.”</div>
+    <script>
+        // Lotus animation
+        function createLotus() {
+            const lotusBg = document.querySelector('.lotus-bg');
+            const lotusSVG = `<svg viewBox='0 0 60 60' fill='none' xmlns='http://www.w3.org/2000/svg'><ellipse cx='30' cy='30' rx='28' ry='10' fill='#B8C6DB'/><ellipse cx='30' cy='20' rx='10' ry='28' fill='#E6E6FA' opacity='0.7'/></svg>`;
+            for (let i = 0; i < 10; i++) {
+                const lotus = document.createElement('div');
+                lotus.className = 'lotus';
+                lotus.style.left = `${Math.random() * 100}%`;
+                lotus.style.animationDuration = `${12 + Math.random() * 10}s`;
+                lotus.style.bottom = `-${Math.random() * 60 + 30}px`;
+                lotus.innerHTML = lotusSVG;
+                lotusBg.appendChild(lotus);
+            }
+        }
+        createLotus();
+    </script>
+    <script src="script.js"></script>
     <script>
         const poses = [
             {
@@ -104,7 +154,6 @@
                 image: "assets/balasana.jpg"
             }
         ];
-
         let currentPose = 0;
         let timeLeft = 20;
         let timerInterval;
@@ -113,14 +162,12 @@
         const poseTitle = document.getElementById('poseTitle');
         const poseDescription = document.getElementById('poseDescription');
         const nextPoseBtn = document.getElementById('nextPoseBtn');
-
         function updatePose() {
             const pose = poses[currentPose];
             poseImage.src = pose.image;
             poseTitle.textContent = pose.title;
             poseDescription.textContent = pose.description;
         }
-
         function updateTimer() {
             timerDisplay.textContent = timeLeft;
             if (timeLeft <= 0) {
@@ -130,20 +177,16 @@
             }
             timeLeft--;
         }
-
         function startTimer() {
             timeLeft = 20;
             timerDisplay.textContent = timeLeft;
             timerInterval = setInterval(updateTimer, 1000);
         }
-
         nextPoseBtn.addEventListener('click', () => {
             currentPose = (currentPose + 1) % poses.length;
             updatePose();
             timeLeft = 20;
         });
-
-        // Initialize first pose and start timer
         updatePose();
         startTimer();
     </script>
