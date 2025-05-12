@@ -1,51 +1,47 @@
-# MindMinute – 1-Minute Wellness Break App
+# GharStock - Smart Home Essentials Tracker
 
-A simple, visually calming web app that helps users take short 1-minute breaks using breathing exercises, yoga poses, and meditation.
+GharStock is a web-based tool that helps Indian households keep track of their daily essential items like groceries, gas, milk, etc. The application allows users to add items, set stock levels, update quantities, and get alerts when any item is running low.
 
 ## Features
 
-- 🫁 Breathing Exercise with animated circle
-- 🧘 Quick Yoga Poses with auto-advance
-- 🧠 1-Minute Meditation with calming background
-- ⏱️ 60-second timers for all activities
-- 🌙 Calming visual design
-- 📱 Responsive layout
+- 📝 Add new items with name, quantity, unit, and minimum limit
+- 📊 View all items in a clean, organized table
+- 🔍 Search items by name
+- ⚠️ Visual alerts for low stock items
+- ✏️ Update item quantities
+- 🗑️ Delete items
+- 💾 Automatic data persistence using localStorage
+- 📱 Responsive design for all devices
+- 🕒 Last updated timestamp
 
-## Running Locally
+## How to Use
 
-1. Make sure you have Python 3.x installed
-2. Open a terminal in the project directory
-3. Run the local server:
-   ```bash
-   python server.py
-   ```
-4. Open your browser and visit:
-   ```
-   http://localhost:3000
-   ```
+1. Open `index.html` in your web browser
+2. Add new items using the form at the top
+3. View your inventory in the table below
+4. Use the search box to find specific items
+5. Click the "Edit" button to update quantities
+6. Click the "Delete" button to remove items
 
-## Project Structure
+## Technical Details
 
-```
-MindMinute/
-├── index.html          # Main HTML file
-├── style.css           # Styles
-├── app.js             # JavaScript logic
-├── server.py          # Local development server
-├── assets/            # Images and media
-│   ├── yoga1.svg      # Mountain Pose
-│   ├── yoga2.svg      # Easy Pose
-│   └── yoga3.svg      # Child's Pose
-└── README.md          # This file
-```
+- Built with vanilla HTML, CSS, and JavaScript
+- No external dependencies (except Font Awesome for icons)
+- Uses localStorage for data persistence
+- Works offline
+- No backend required
 
-## Development
+## Browser Support
 
-- The app uses vanilla JavaScript, HTML, and CSS
-- No build process required
-- SVG illustrations for yoga poses
-- Responsive design for all screen sizes
+The application works on all modern browsers that support:
+- ES6 JavaScript
+- localStorage
+- CSS Grid and Flexbox
+
+## Contributing
+
+Feel free to fork this repository and submit pull requests for any improvements.
 
 ## License
 
-MIT License - Feel free to use and modify for your own projects! 
+This project is open source and available under the MIT License. 

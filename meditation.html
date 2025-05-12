@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meditation - MindMinute</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .meditation-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 70vh;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            opacity: 0.1;
+            animation: wave 10s infinite ease-in-out;
+        }
+
+        .meditation-content {
+            text-align: center;
+            z-index: 1;
+        }
+
+        .meditation-text {
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+
+        .timer-circle {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            border: 4px solid var(--primary-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+            position: relative;
+        }
+
+        .timer-circle::before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            border: 4px solid transparent;
+            border-top-color: var(--accent-color);
+            animation: spin 60s linear infinite;
+        }
+
+        .controls {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .controls button {
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 5px;
+            background-color: var(--primary-color);
+            color: white;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .controls button:hover {
+            transform: scale(1.05);
+        }
+
+        @keyframes wave {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <main class="container">
+        <h1>1-Minute Meditation</h1>
+        
+        <div class="meditation-container">
+            <div class="background"></div>
+            
+            <div class="meditation-content">
+                <p class="meditation-text">
+                    Focus on your breath...<br>
+                    Let thoughts pass like clouds in the sky...
+                </p>
+                
+                <div class="timer-circle">60</div>
+                
+                <div class="controls">
+                    <button onclick="location.href='index.html'">Home</button>
+                    <button id="restartBtn">Restart</button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        let timeLeft = 60;
+        let timerInterval;
+        const timerDisplay = document.querySelector('.timer-circle');
+        const restartBtn = document.getElementById('restartBtn');
+
+        function updateTimer() {
+            timerDisplay.textContent = timeLeft;
+            if (timeLeft <= 0) {
+                clearInterval(timerInterval);
+                timerDisplay.textContent = "Done";
+                if (preferences.sound) {
+                    // Play completion sound
+                    const audio = new Audio('assets/bell.mp3');
+                    audio.play();
+                }
+            }
+            timeLeft--;
+        }
+
+        function startTimer() {
+            timeLeft = 60;
+            timerDisplay.textContent = timeLeft;
+            timerInterval = setInterval(updateTimer, 1000);
+        }
+
+        restartBtn.addEventListener('click', () => {
+            clearInterval(timerInterval);
+            startTimer();
+        });
+
+        // Start timer when page loads
+        startTimer();
+    </script>
+</body>
+</html> 

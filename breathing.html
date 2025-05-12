@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Breathing Exercise - MindMinute</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .breathing-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 70vh;
+        }
+
+        .breathing-circle {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            background-color: var(--primary-color);
+            opacity: 0.6;
+            animation: breathe 8s infinite ease-in-out;
+            margin-bottom: 2rem;
+        }
+
+        .breathing-text {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        .timer {
+            font-size: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .controls {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .controls button {
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 5px;
+            background-color: var(--primary-color);
+            color: white;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .controls button:hover {
+            transform: scale(1.05);
+        }
+
+        @keyframes breathe {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.5); }
+        }
+    </style>
+</head>
+<body>
+    <main class="container">
+        <h1>Breathing Exercise</h1>
+        
+        <div class="breathing-container">
+            <div class="breathing-circle"></div>
+            <div class="breathing-text">Inhale... Hold... Exhale...</div>
+            <div class="timer">60</div>
+            
+            <div class="controls">
+                <button onclick="location.href='index.html'">Home</button>
+                <button id="restartBtn">Restart</button>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        let timeLeft = 60;
+        let timerInterval;
+        const timerDisplay = document.querySelector('.timer');
+        const breathingText = document.querySelector('.breathing-text');
+        const breathingCircle = document.querySelector('.breathing-circle');
+        const restartBtn = document.getElementById('restartBtn');
+
+        function updateTimer() {
+            timerDisplay.textContent = timeLeft;
+            if (timeLeft <= 0) {
+                clearInterval(timerInterval);
+                breathingCircle.style.animation = 'none';
+                breathingText.textContent = "Exercise complete!";
+                if (preferences.sound) {
+                    // Play completion sound
+                    const audio = new Audio('assets/bell.mp3');
+                    audio.play();
+                }
+            }
+            timeLeft--;
+        }
+
+        function startTimer() {
+            timeLeft = 60;
+            timerDisplay.textContent = timeLeft;
+            breathingCircle.style.animation = 'breathe 8s infinite ease-in-out';
+            breathingText.textContent = "Inhale... Hold... Exhale...";
+            timerInterval = setInterval(updateTimer, 1000);
+        }
+
+        restartBtn.addEventListener('click', () => {
+            clearInterval(timerInterval);
+            startTimer();
+        });
+
+        // Start timer when page loads
+        startTimer();
+    </script>
+</body>
+</html> 

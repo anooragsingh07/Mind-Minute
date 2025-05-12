@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quick Yoga - MindMinute</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .yoga-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 70vh;
+        }
+
+        .pose-container {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .pose-image {
+            width: 300px;
+            height: 300px;
+            object-fit: cover;
+            border-radius: 15px;
+            margin-bottom: 1rem;
+        }
+
+        .pose-title {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            color: var(--primary-color);
+        }
+
+        .pose-description {
+            max-width: 400px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        .timer {
+            font-size: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .controls {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .controls button {
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 5px;
+            background-color: var(--primary-color);
+            color: white;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .controls button:hover {
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body>
+    <main class="container">
+        <h1>Quick Yoga Poses</h1>
+        
+        <div class="yoga-container">
+            <div class="pose-container">
+                <img src="assets/tadasana.jpg" alt="Tadasana" class="pose-image" id="poseImage">
+                <h2 class="pose-title" id="poseTitle">Tadasana (Mountain Pose)</h2>
+                <p class="pose-description" id="poseDescription">
+                    Stand tall with feet together, arms at sides. Feel grounded and centered.
+                </p>
+            </div>
+            
+            <div class="timer">20</div>
+            
+            <div class="controls">
+                <button onclick="location.href='index.html'">Home</button>
+                <button id="nextPoseBtn">Next Pose</button>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        const poses = [
+            {
+                title: "Tadasana (Mountain Pose)",
+                description: "Stand tall with feet together, arms at sides. Feel grounded and centered.",
+                image: "assets/tadasana.jpg"
+            },
+            {
+                title: "Sukhasana (Easy Pose)",
+                description: "Sit cross-legged with a straight spine. Place hands on knees, palms up.",
+                image: "assets/sukhasana.jpg"
+            },
+            {
+                title: "Balasana (Child's Pose)",
+                description: "Kneel and fold forward, arms extended. Rest forehead on the ground.",
+                image: "assets/balasana.jpg"
+            }
+        ];
+
+        let currentPose = 0;
+        let timeLeft = 20;
+        let timerInterval;
+        const timerDisplay = document.querySelector('.timer');
+        const poseImage = document.getElementById('poseImage');
+        const poseTitle = document.getElementById('poseTitle');
+        const poseDescription = document.getElementById('poseDescription');
+        const nextPoseBtn = document.getElementById('nextPoseBtn');
+
+        function updatePose() {
+            const pose = poses[currentPose];
+            poseImage.src = pose.image;
+            poseTitle.textContent = pose.title;
+            poseDescription.textContent = pose.description;
+        }
+
+        function updateTimer() {
+            timerDisplay.textContent = timeLeft;
+            if (timeLeft <= 0) {
+                currentPose = (currentPose + 1) % poses.length;
+                updatePose();
+                timeLeft = 20;
+            }
+            timeLeft--;
+        }
+
+        function startTimer() {
+            timeLeft = 20;
+            timerDisplay.textContent = timeLeft;
+            timerInterval = setInterval(updateTimer, 1000);
+        }
+
+        nextPoseBtn.addEventListener('click', () => {
+            currentPose = (currentPose + 1) % poses.length;
+            updatePose();
+            timeLeft = 20;
+        });
+
+        // Initialize first pose and start timer
+        updatePose();
+        startTimer();
+    </script>
+</body>
+</html> 

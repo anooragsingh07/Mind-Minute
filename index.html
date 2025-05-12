@@ -1,49 +1,39 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>MindMinute – 1-Minute Wellness Break App</title>
-  <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MindMinute - Take a Break</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#6B8EAD">
 </head>
 <body>
-  <main>
-    <!-- Home Screen -->
-    <section id="home" class="active">
-      <h1>Take a Mind Minute</h1>
-      <div class="card-container">
-        <button class="card" id="breathing-btn">🫁 Breathing Exercise</button>
-        <button class="card" id="yoga-btn">🧘 Quick Yoga Pose</button>
-        <button class="card" id="meditation-btn">🧠 1-Minute Meditation</button>
-      </div>
-    </section>
-    <!-- Breathing Exercise -->
-    <section id="breathing" class="hidden">
-      <h2>Breathing Exercise</h2>
-      <div id="breath-circle"></div>
-      <p id="breath-text">Inhale... Hold... Exhale...</p>
-      <div id="breath-timer">60</div>
-      <button class="nav-btn" id="breathing-home">Go Home</button>
-    </section>
-    <!-- Yoga Pose -->
-    <section id="yoga" class="hidden">
-      <h2>Quick Yoga Pose</h2>
-      <img id="yoga-img" src="assets/yoga1.png" alt="Yoga Pose">
-      <p id="yoga-name">Tadasana (Mountain Pose)</p>
-      <p id="yoga-benefit">Improves posture and balance.</p>
-      <button class="nav-btn" id="next-pose">Next Pose</button>
-      <div id="yoga-timer">60</div>
-      <button class="nav-btn" id="yoga-home">Go Home</button>
-    </section>
-    <!-- Meditation -->
-    <section id="meditation" class="hidden">
-      <h2>1-Minute Meditation</h2>
-      <div id="meditation-bg"></div>
-      <p id="meditation-message">Focus on your breath… Let thoughts pass…</p>
-      <div id="meditation-timer">60</div>
-      <button class="nav-btn" id="meditation-home">Go Home</button>
-    </section>
-  </main>
-  <script src="app.js"></script>
+    <main class="container">
+        <h1>Take a Mind Minute</h1>
+        
+        <div class="cards-container">
+            <a href="breathing.html" class="card breathing">
+                <h2>🫁 Breathing Exercise</h2>
+                <p>Take deep breaths with guided animation</p>
+            </a>
+            
+            <a href="yoga.html" class="card yoga">
+                <h2>🧘 Quick Yoga Pose</h2>
+                <p>Simple poses for instant relief</p>
+            </a>
+            
+            <a href="meditation.html" class="card meditation">
+                <h2>🧠 1-Minute Meditation</h2>
+                <p>Quick mindfulness practice</p>
+            </a>
+        </div>
+
+        <div class="settings">
+            <button id="themeToggle" aria-label="Toggle dark mode">🌙</button>
+            <button id="soundToggle" aria-label="Toggle sound">🔊</button>
+        </div>
+    </main>
+    <script src="script.js"></script>
 </body>
 </html> 

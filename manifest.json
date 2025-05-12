@@ -1,0 +1,21 @@
+{
+    "name": "MindMinute",
+    "short_name": "MindMinute",
+    "description": "Take a 1-minute wellness break with breathing exercises, yoga, and meditation",
+    "start_url": "/",
+    "display": "standalone",
+    "background_color": "#F5F7FA",
+    "theme_color": "#6B8EAD",
+    "icons": [
+        {
+            "src": "assets/icon-192.png",
+            "sizes": "192x192",
+            "type": "image/png"
+        },
+        {
+            "src": "assets/icon-512.png",
+            "sizes": "512x512",
+            "type": "image/png"
+        }
+    ]
+} 
