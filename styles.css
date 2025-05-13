@@ -45,37 +45,111 @@ h1 {
 }
 
 .cards-container {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 2rem;
+    display: flex;
+    justify-content: center;
+    gap: 2.5rem;
     width: 100%;
+    margin-top: 2rem;
+    flex-wrap: wrap;
 }
 
 .card {
-    background-color: var(--accent-color);
-    border-radius: 15px;
-    padding: 2rem;
+    background: var(--accent-color);
+    border-radius: 18px;
+    padding: 2.5rem 2rem 2rem 2rem;
     text-decoration: none;
     color: var(--text-color);
     transition: transform 0.3s, box-shadow 0.3s;
     text-align: center;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 6px 18px rgba(0,0,0,0.10);
+    min-width: 220px;
+    max-width: 270px;
+    cursor: pointer;
+    position: relative;
+    z-index: 1;
 }
 
 .card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+    transform: translateY(-8px) scale(1.04);
+    box-shadow: 0 12px 32px rgba(0,0,0,0.13);
+}
+
+.card-icon {
+    margin-bottom: 1.2rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .card h2 {
-    margin-bottom: 1rem;
-    font-size: 1.5rem;
+    margin-bottom: 0.7rem;
+    font-size: 1.35rem;
+    font-weight: 600;
+    color: var(--primary-color);
 }
 
-.settings {
+.card p {
+    font-size: 1.05rem;
+    color: var(--text-color);
+    opacity: 0.85;
+}
+
+/* Modal card overlays */
+.modal-card {
+    display: none;
     position: fixed;
-    bottom: 2rem;
+    z-index: 100;
+    left: 0; top: 0; width: 100vw; height: 100vh;
+    background: rgba(44,62,80,0.18);
+    justify-content: center;
+    align-items: center;
+    transition: background 0.3s;
+}
+
+.modal-content {
+    background: var(--background-color);
+    border-radius: 22px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.18);
+    padding: 2.5rem 2.2rem 2rem 2.2rem;
+    min-width: 320px;
+    max-width: 95vw;
+    min-height: 340px;
+    max-height: 90vh;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    animation: modalIn 0.3s cubic-bezier(.4,2,.6,1) 1;
+}
+
+@keyframes modalIn {
+    0% { transform: scale(0.92) translateY(30px); opacity: 0; }
+    100% { transform: scale(1) translateY(0); opacity: 1; }
+}
+
+.close-btn {
+    position: absolute;
+    top: 1.1rem;
+    right: 1.1rem;
+    background: none;
+    border: none;
+    font-size: 2rem;
+    color: var(--primary-color);
+    cursor: pointer;
+    z-index: 10;
+    transition: color 0.2s;
+}
+
+.close-btn:hover {
+    color: var(--secondary-color);
+}
+
+/* Settings (top right) */
+.settings-top {
+    position: fixed;
+    top: 1.5rem;
     right: 2rem;
+    z-index: 20;
     display: flex;
     gap: 1rem;
 }
@@ -84,28 +158,56 @@ h1 {
     background: var(--primary-color);
     border: none;
     border-radius: 50%;
-    width: 40px;
-    height: 40px;
+    width: 44px;
+    height: 44px;
     cursor: pointer;
     color: white;
-    font-size: 1.2rem;
-    transition: transform 0.2s;
+    font-size: 1.4rem;
+    transition: transform 0.2s, background 0.2s;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
 }
 
 .settings button:hover {
-    transform: scale(1.1);
+    transform: scale(1.08);
+    background: var(--secondary-color);
+}
+
+/* Animated background */
+.background-animated {
+    position: fixed;
+    top: 0; left: 0; width: 100vw; height: 100vh;
+    z-index: 0;
+    background: linear-gradient(120deg, var(--secondary-color) 0%, var(--accent-color) 100%);
+    overflow: hidden;
+    animation: bgMove 18s ease-in-out infinite alternate;
+}
+
+@keyframes bgMove {
+    0% { filter: hue-rotate(0deg); }
+    100% { filter: hue-rotate(20deg); }
+}
+
+@media (max-width: 900px) {
+    .cards-container {
+        flex-direction: column;
+        align-items: center;
+        gap: 1.5rem;
+    }
+    .modal-content {
+        min-width: 90vw;
+        padding: 1.2rem 0.5rem 1.2rem 0.5rem;
+    }
 }
 
 @media (max-width: 600px) {
     .container {
         padding: 1rem;
     }
-    
     h1 {
         font-size: 2rem;
     }
-    
-    .cards-container {
-        grid-template-columns: 1fr;
+    .modal-content {
+        min-width: 98vw;
+        padding: 0.5rem 0.2rem 0.5rem 0.2rem;
     }
 } 
