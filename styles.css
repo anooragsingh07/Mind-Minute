@@ -43,6 +43,7 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
 }
 
 h1 {
@@ -64,10 +65,10 @@ h1 {
 
 .card {
     background: var(--card-bg);
+    color: var(--text-color);
     border-radius: 28px;
     padding: 2.5rem 2rem 2rem 2rem;
     text-decoration: none;
-    color: var(--text-color);
     transition: transform 0.3s, box-shadow 0.3s, background 0.3s;
     text-align: center;
     box-shadow: 0 8px 32px rgba(0,0,0,0.13);
@@ -76,7 +77,17 @@ h1 {
     cursor: pointer;
     position: relative;
     z-index: 1;
-    backdrop-filter: blur(6px);
+    backdrop-filter: blur(16px) saturate(1.2);
+    -webkit-backdrop-filter: blur(16px) saturate(1.2);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.card h2, .card p {
+    width: 100%;
+    text-align: center;
 }
 
 .card:hover {
@@ -119,6 +130,7 @@ h1 {
 
 .modal-content {
     background: var(--modal-bg);
+    color: var(--text-color);
     border-radius: 32px;
     box-shadow: 0 12px 48px rgba(0,0,0,0.22);
     padding: 2.5rem 2.2rem 2rem 2.2rem;
@@ -130,14 +142,16 @@ h1 {
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
     animation: modalIn 0.35s cubic-bezier(.4,2,.6,1) 1;
-    backdrop-filter: blur(10px);
-    color: var(--text-color);
+    backdrop-filter: blur(16px) saturate(1.2);
+    -webkit-backdrop-filter: blur(16px) saturate(1.2);
+    overflow: auto;
 }
 
-@keyframes modalIn {
-    0% { transform: scale(0.92) translateY(30px); opacity: 0; }
-    100% { transform: scale(1) translateY(0); opacity: 1; }
+.modal-content > *:not(.close-btn) {
+    width: 100%;
+    text-align: center;
 }
 
 .close-btn {
@@ -209,13 +223,28 @@ h1 {
     position: absolute;
     border-radius: 50%;
     background: rgba(107, 142, 173, 0.13);
-    animation: floatBubble 18s linear infinite;
+    filter: blur(2.5px);
+    animation: floatBubble 18s linear infinite, bubbleDrift 8s ease-in-out infinite;
     pointer-events: none;
 }
 
 @keyframes floatBubble {
     0% { transform: translateY(100vh) scale(0.8); opacity: 0.7; }
     100% { transform: translateY(-10vh) scale(1.2); opacity: 0.2; }
+}
+
+@keyframes bubbleDrift {
+    0%, 100% { margin-left: 0; }
+    50% { margin-left: 30px; }
+}
+
+.card-icon svg, .card.meditation .card-icon svg {
+    animation: iconFloat 4s ease-in-out infinite alternate;
+}
+
+@keyframes iconFloat {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(-8px); }
 }
 
 @keyframes bgMove {
@@ -316,6 +345,16 @@ h1 {
     opacity: 0.7;
 }
 
+.controls {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1.2rem;
+    margin-top: 1.2rem;
+    margin-bottom: 0.2rem;
+    width: 100%;
+}
+
 .controls button {
     padding: 0.5rem 1.2rem;
     border: none;
@@ -324,10 +363,10 @@ h1 {
     color: white;
     font-size: 1rem;
     font-weight: 500;
-    margin: 0 0.3rem;
     cursor: pointer;
     transition: background 0.2s, transform 0.2s;
     box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+    min-width: 90px;
 }
 
 .controls button:hover, .controls button:focus {
@@ -336,8 +375,11 @@ h1 {
     transform: scale(1.05);
 }
 
-.pose-title, .pose-description, .yoga-breath-text {
+.quote, .timer, .timer-circle, .breathing-text, .meditation-text, .pose-title, .pose-description, .yoga-breath-text {
+    width: 100%;
     text-align: center;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .breathing-anim-wrapper {
@@ -372,10 +414,8 @@ h1 {
 }
 
 @media (max-width: 900px) {
-    .cards-container {
-        flex-direction: column;
-        align-items: center;
-        gap: 1.5rem;
+    .container {
+        padding: 1rem;
     }
     .modal-content {
         min-width: 90vw;
@@ -389,7 +429,7 @@ h1 {
 
 @media (max-width: 600px) {
     .container {
-        padding: 1rem;
+        padding: 0.5rem;
     }
     h1 {
         font-size: 2rem;
@@ -401,5 +441,12 @@ h1 {
     .header {
         margin-top: 0.5rem;
         margin-bottom: 0.3rem;
+    }
+    .controls {
+        flex-direction: column;
+        gap: 0.7rem;
+    }
+    .controls button {
+        min-width: 120px;
     }
 } 
