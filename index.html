@@ -9,15 +9,18 @@
     <meta name="theme-color" content="#6B8EAD">
 </head>
 <body>
-    <!-- Animated background (e.g., soft gradient or bubbles) -->
-    <div class="background-animated"></div>
+    <div class="background-animated" id="backgroundAnimated"></div>
     <div class="settings settings-top">
         <button id="themeToggle" aria-label="Toggle dark mode">🌙</button>
     </div>
+    <header class="header">
+        <img src="assets/icon-192.png" alt="MindMinute Logo" class="logo" />
+        <span class="brand">MindMinute</span>
+    </header>
     <main class="container">
         <h1>Take a Mind Minute</h1>
         <div class="cards-container">
-            <div class="card breathing" onclick="openModal('breathingModal')">
+            <div class="card breathing" tabindex="0" aria-label="Open Breathing Exercise" onclick="openModal('breathingModal')" onkeydown="if(event.key==='Enter'){openModal('breathingModal')}">
                 <div class="card-icon">
                     <!-- Lungs SVG icon -->
                     <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M24 44V24" stroke="#6B8EAD" stroke-width="2.5" stroke-linecap="round"/><path d="M24 24C24 13 14 13 14 24V36" stroke="#6B8EAD" stroke-width="2.5" stroke-linecap="round"/><path d="M24 24C24 13 34 13 34 24V36" stroke="#6B8EAD" stroke-width="2.5" stroke-linecap="round"/></svg>
@@ -25,15 +28,18 @@
                 <h2>Breathing Exercise</h2>
                 <p>Take deep breaths with guided animation</p>
             </div>
-            <div class="card yoga" onclick="openModal('yogaModal')">
+            <div class="card yoga" tabindex="0" aria-label="Open Quick Yoga Pose" onclick="openModal('yogaModal')" onkeydown="if(event.key==='Enter'){openModal('yogaModal')}">
                 <div class="card-icon">
-                    <!-- Yoga SVG icon -->
-                    <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="24" cy="14" r="6" fill="#B8C6DB"/><rect x="20" y="20" width="8" height="18" rx="4" fill="#B8C6DB"/><ellipse cx="24" cy="40" rx="10" ry="3" fill="#E6E6FA"/></svg>
+                    <!-- Modern, transparent meditation SVG icon -->
+                    <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="24" cy="14" r="5" fill="var(--primary-color)"/>
+                        <path d="M24 20c-3 0-6 2-6 6 0 2 1 4 2 5l-5 5c-1 1-1 2 0 3s2 1 3 0l5-5 5 5c1 1 2 1 3 0s1-2 0-3l-5-5c1-1 2-3 2-5 0-4-3-6-6-6z" fill="var(--primary-color)"/>
+                    </svg>
                 </div>
                 <h2>Quick Yoga Pose</h2>
                 <p>Simple poses for instant relief</p>
             </div>
-            <div class="card meditation" onclick="openModal('meditationModal')">
+            <div class="card meditation" tabindex="0" aria-label="Open 1-Minute Meditation" onclick="openModal('meditationModal')" onkeydown="if(event.key==='Enter'){openModal('meditationModal')}">
                 <div class="card-icon">
                     <!-- Brain SVG icon -->
                     <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><ellipse cx="16" cy="24" rx="10" ry="14" fill="#B8C6DB"/><ellipse cx="32" cy="24" rx="10" ry="14" fill="#E6E6FA"/></svg>
@@ -44,23 +50,28 @@
         </div>
     </main>
     <!-- Modals for each activity -->
-    <div id="breathingModal" class="modal-card">
+    <div id="breathingModal" class="modal-card" role="dialog" aria-modal="true" aria-labelledby="breathingTitle">
         <div class="modal-content">
-            <button class="close-btn" onclick="closeModal('breathingModal')">&times;</button>
-            <!-- Breathing exercise content will be injected here -->
-            <div id="breathingContent"></div>
+            <button class="close-btn" aria-label="Close Breathing Exercise" onclick="closeModal('breathingModal')">&times;</button>
+            <div id="breathingContent">
+                <div class="quote" id="breathingQuote"></div>
+            </div>
         </div>
     </div>
-    <div id="yogaModal" class="modal-card">
+    <div id="yogaModal" class="modal-card" role="dialog" aria-modal="true" aria-labelledby="yogaTitle">
         <div class="modal-content">
-            <button class="close-btn" onclick="closeModal('yogaModal')">&times;</button>
-            <div id="yogaContent"></div>
+            <button class="close-btn" aria-label="Close Yoga Pose" onclick="closeModal('yogaModal')">&times;</button>
+            <div id="yogaContent">
+                <div class="quote" id="yogaQuote"></div>
+            </div>
         </div>
     </div>
-    <div id="meditationModal" class="modal-card">
+    <div id="meditationModal" class="modal-card" role="dialog" aria-modal="true" aria-labelledby="meditationTitle">
         <div class="modal-content">
-            <button class="close-btn" onclick="closeModal('meditationModal')">&times;</button>
-            <div id="meditationContent"></div>
+            <button class="close-btn" aria-label="Close Meditation" onclick="closeModal('meditationModal')">&times;</button>
+            <div id="meditationContent">
+                <div class="quote" id="meditationQuote"></div>
+            </div>
         </div>
     </div>
     <script src="script.js"></script>
@@ -71,11 +82,34 @@
         if(id === 'breathingModal') loadBreathing();
         if(id === 'yogaModal') loadYoga();
         if(id === 'meditationModal') loadMeditation();
+        // Focus the close button for accessibility
+        setTimeout(() => {
+            document.querySelector(`#${id} .close-btn`).focus();
+        }, 100);
     }
     function closeModal(id) {
         document.getElementById(id).style.display = 'none';
+        // Return focus to the main card for accessibility
+        if(id === 'breathingModal') document.querySelector('.card.breathing').focus();
+        if(id === 'yogaModal') document.querySelector('.card.yoga').focus();
+        if(id === 'meditationModal') document.querySelector('.card.meditation').focus();
     }
-    // Placeholder: You will implement loadBreathing, loadYoga, loadMeditation in script.js
+    // Floating bubbles background
+    function createBubbles() {
+        const bg = document.getElementById('backgroundAnimated');
+        for (let i = 0; i < 18; i++) {
+            const bubble = document.createElement('div');
+            bubble.className = 'bubble';
+            const size = Math.random() * 60 + 30;
+            bubble.style.width = `${size}px`;
+            bubble.style.height = `${size}px`;
+            bubble.style.left = `${Math.random() * 100}%`;
+            bubble.style.animationDuration = `${12 + Math.random() * 8}s`;
+            bubble.style.bottom = `-${size}px`;
+            bg.appendChild(bubble);
+        }
+    }
+    createBubbles();
     </script>
 </body>
 </html> 

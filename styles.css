@@ -4,14 +4,22 @@
     --accent-color: #E6E6FA;
     --text-color: #2C3E50;
     --background-color: #F5F7FA;
+    --modal-bg: rgba(255,255,255,0.92);
+    --card-bg: rgba(255,255,255,0.82);
+    --quote-color: #3A4A5A;
+    --timer-color: #2C3E50;
 }
 
 [data-theme="dark"] {
-    --primary-color: #4A6FA5;
-    --secondary-color: #2C3E50;
-    --accent-color: #1A1A2E;
+    --primary-color: #B8C6DB;
+    --secondary-color: #4A6FA5;
+    --accent-color: #23243a;
     --text-color: #E6E6FA;
     --background-color: #121212;
+    --modal-bg: rgba(30,34,44,0.98);
+    --card-bg: rgba(30,34,44,0.92);
+    --quote-color: #E6E6FA;
+    --timer-color: #B8C6DB;
 }
 
 * {
@@ -51,27 +59,30 @@ h1 {
     width: 100%;
     margin-top: 2rem;
     flex-wrap: wrap;
+    z-index: 2;
 }
 
 .card {
-    background: var(--accent-color);
-    border-radius: 18px;
+    background: var(--card-bg);
+    border-radius: 28px;
     padding: 2.5rem 2rem 2rem 2rem;
     text-decoration: none;
     color: var(--text-color);
-    transition: transform 0.3s, box-shadow 0.3s;
+    transition: transform 0.3s, box-shadow 0.3s, background 0.3s;
     text-align: center;
-    box-shadow: 0 6px 18px rgba(0,0,0,0.10);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.13);
     min-width: 220px;
     max-width: 270px;
     cursor: pointer;
     position: relative;
     z-index: 1;
+    backdrop-filter: blur(6px);
 }
 
 .card:hover {
     transform: translateY(-8px) scale(1.04);
-    box-shadow: 0 12px 32px rgba(0,0,0,0.13);
+    box-shadow: 0 16px 40px rgba(0,0,0,0.16);
+    background: var(--modal-bg);
 }
 
 .card-icon {
@@ -107,9 +118,9 @@ h1 {
 }
 
 .modal-content {
-    background: var(--background-color);
-    border-radius: 22px;
-    box-shadow: 0 8px 32px rgba(0,0,0,0.18);
+    background: var(--modal-bg);
+    border-radius: 32px;
+    box-shadow: 0 12px 48px rgba(0,0,0,0.22);
     padding: 2.5rem 2.2rem 2rem 2.2rem;
     min-width: 320px;
     max-width: 95vw;
@@ -119,7 +130,9 @@ h1 {
     display: flex;
     flex-direction: column;
     align-items: center;
-    animation: modalIn 0.3s cubic-bezier(.4,2,.6,1) 1;
+    animation: modalIn 0.35s cubic-bezier(.4,2,.6,1) 1;
+    backdrop-filter: blur(10px);
+    color: var(--text-color);
 }
 
 @keyframes modalIn {
@@ -140,8 +153,18 @@ h1 {
     transition: color 0.2s;
 }
 
+.close-btn:focus {
+    outline: 2px solid var(--primary-color);
+}
+
 .close-btn:hover {
     color: var(--secondary-color);
+}
+
+/* Accessibility: focus for cards */
+.card:focus {
+    outline: 2px solid var(--primary-color);
+    outline-offset: 2px;
 }
 
 /* Settings (top right) */
@@ -172,7 +195,7 @@ h1 {
     background: var(--secondary-color);
 }
 
-/* Animated background */
+/* Enhanced animated background with floating bubbles */
 .background-animated {
     position: fixed;
     top: 0; left: 0; width: 100vw; height: 100vh;
@@ -182,9 +205,170 @@ h1 {
     animation: bgMove 18s ease-in-out infinite alternate;
 }
 
+.bubble {
+    position: absolute;
+    border-radius: 50%;
+    background: rgba(107, 142, 173, 0.13);
+    animation: floatBubble 18s linear infinite;
+    pointer-events: none;
+}
+
+@keyframes floatBubble {
+    0% { transform: translateY(100vh) scale(0.8); opacity: 0.7; }
+    100% { transform: translateY(-10vh) scale(1.2); opacity: 0.2; }
+}
+
 @keyframes bgMove {
     0% { filter: hue-rotate(0deg); }
     100% { filter: hue-rotate(20deg); }
+}
+
+/* Header/Branding */
+.header {
+    position: relative;
+    z-index: 10;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 2.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.logo {
+    width: 38px;
+    height: 38px;
+    margin-right: 0.7rem;
+    vertical-align: middle;
+}
+
+.brand {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--primary-color);
+    letter-spacing: 2px;
+    font-family: 'Segoe UI', system-ui, sans-serif;
+}
+
+.quote {
+    font-size: 1.1rem;
+    color: var(--quote-color);
+    font-style: italic;
+    margin-bottom: 1.2rem;
+    text-align: center;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+}
+
+.timer, .timer-circle {
+    color: var(--timer-color) !important;
+    font-weight: 600;
+}
+
+.breathing-text, .meditation-text, .pose-title, .pose-description {
+    color: var(--text-color);
+}
+
+.pose-container {
+    text-align: center;
+    margin-bottom: 2rem;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.yoga-breath-circle {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 220px;
+    height: 220px;
+    border-radius: 50%;
+    background: linear-gradient(120deg, var(--primary-color) 60%, var(--accent-color) 100%);
+    opacity: 0.18;
+    z-index: 0;
+    animation: yogaBreathe 8s infinite ease-in-out;
+}
+@keyframes yogaBreathe {
+    0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.18; }
+    50% { transform: translate(-50%, -50%) scale(1.25); opacity: 0.32; }
+}
+.pose-image {
+    width: 180px;
+    height: 180px;
+    object-fit: contain;
+    background: transparent;
+    border-radius: 15px;
+    margin-bottom: 1rem;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    display: block;
+    position: relative;
+    z-index: 1;
+}
+
+.yoga-fallback-icon {
+    width: 120px;
+    height: 120px;
+    display: block;
+    margin: 0 auto 1rem auto;
+    opacity: 0.7;
+}
+
+.controls button {
+    padding: 0.5rem 1.2rem;
+    border: none;
+    border-radius: 7px;
+    background-color: var(--primary-color);
+    color: white;
+    font-size: 1rem;
+    font-weight: 500;
+    margin: 0 0.3rem;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.2s;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+}
+
+.controls button:hover, .controls button:focus {
+    background: var(--secondary-color);
+    outline: none;
+    transform: scale(1.05);
+}
+
+.pose-title, .pose-description, .yoga-breath-text {
+    text-align: center;
+}
+
+.breathing-anim-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1.2rem;
+}
+.breathing-anim-circle {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    background: linear-gradient(120deg, var(--primary-color) 60%, var(--accent-color) 100%);
+    opacity: 0.18;
+    margin-bottom: 0.7rem;
+    animation: breathingPulse 8s infinite ease-in-out;
+}
+@keyframes breathingPulse {
+    0%, 100% { transform: scale(1); opacity: 0.18; }
+    12.5% { transform: scale(1.25); opacity: 0.32; } /* Inhale */
+    50% { transform: scale(1.25); opacity: 0.32; } /* Hold */
+    62.5% { transform: scale(1); opacity: 0.18; } /* Exhale */
+}
+.breathing-anim-text {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--primary-color);
+    margin-bottom: 0.5rem;
+    min-height: 1.5em;
+    text-align: center;
 }
 
 @media (max-width: 900px) {
@@ -196,6 +380,10 @@ h1 {
     .modal-content {
         min-width: 90vw;
         padding: 1.2rem 0.5rem 1.2rem 0.5rem;
+    }
+    .header {
+        margin-top: 1.2rem;
+        margin-bottom: 0.7rem;
     }
 }
 
@@ -209,5 +397,9 @@ h1 {
     .modal-content {
         min-width: 98vw;
         padding: 0.5rem 0.2rem 0.5rem 0.2rem;
+    }
+    .header {
+        margin-top: 0.5rem;
+        margin-bottom: 0.3rem;
     }
 } 
