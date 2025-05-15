@@ -133,11 +133,11 @@ h1 {
     color: var(--text-color);
     border-radius: 32px;
     box-shadow: 0 12px 48px rgba(0,0,0,0.22);
-    padding: 2.5rem 2.2rem 2rem 2.2rem;
-    min-width: 320px;
-    max-width: 95vw;
-    min-height: 340px;
-    max-height: 90vh;
+    padding: 3.5rem 3rem 2.5rem 3rem;
+    min-width: 480px;
+    max-width: 720px;
+    min-height: 420px;
+    max-height: 95vh;
     position: relative;
     display: flex;
     flex-direction: column;
@@ -419,7 +419,8 @@ h1 {
     }
     .modal-content {
         min-width: 90vw;
-        padding: 1.2rem 0.5rem 1.2rem 0.5rem;
+        max-width: 98vw;
+        padding: 2rem 0.5rem 2rem 0.5rem;
     }
     .header {
         margin-top: 1.2rem;
@@ -435,7 +436,8 @@ h1 {
         font-size: 2rem;
     }
     .modal-content {
-        min-width: 98vw;
+        min-width: 99vw;
+        max-width: 99vw;
         padding: 0.5rem 0.2rem 0.5rem 0.2rem;
     }
     .header {
